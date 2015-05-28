@@ -18,20 +18,35 @@ import algorithm.components.operators.SurvivorSelector;
 
 public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 	private Random rand;
+	
+	private int popSize;
+	private double mutationProb;
+	private double crossoverProb;
+	private int numOfGenerations;
+	
 	private ParentSelector parentSelector;
 	private SurvivorSelector survivorSelector;
 	private MutationOperator mutationOperator;
 	private CrossoverOperator crossoverOperator;
 	private FitnessEvaluator fitnessEvaluator;
 	private SolutionImprover solutionImprover;
-	private int popSize;
-	private double mutationProb;
-	private double crossoverProb;
-	private int numOfGenerations;
+
 	
 	@Override
 	public void algorithmConfig(PGGAlgorithmConfiguration conf) {
-		// TODO Auto-generated method stub
+		this.rand = conf.getRandomGenerator();
+		
+		this.popSize = conf.getPopulationSize();
+		this.mutationProb = conf.getMutationProbability();
+		this.crossoverProb = conf.getCrossoverProbability();
+		this.numOfGenerations = conf.getNumberOfGenerations();
+		
+		this.parentSelector = conf.getParentSelector();
+		this.survivorSelector = conf.getSurvivorSelector();
+		this.mutationOperator = conf.getMutationOperator();
+		this.crossoverOperator = conf.getCrossoverOperator();
+		this.fitnessEvaluator = conf.getFitnessEvaluator();
+		this.solutionImprover = conf.getSolutionImprover();
 	}
 
 	@Override
