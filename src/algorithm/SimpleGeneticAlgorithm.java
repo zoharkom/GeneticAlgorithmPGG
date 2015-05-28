@@ -113,11 +113,11 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 
 	private CandidateSolution chooseBestSolution(Graph g,Population population) {
 		CandidateSolution bestSol = null;
-		int bestFitness = Integer.MIN_VALUE;
+		double bestFitness = Integer.MIN_VALUE;
 		
 		for(int i = 0; i < population.getSize() ; i++){
 			CandidateSolution currentSol = population.getIndividual(i);
-			int currentFitness = fitnessEvaluator.evaluate(g, currentSol);
+			double currentFitness = fitnessEvaluator.evaluate(g, currentSol);
 			if(currentFitness >= bestFitness){
 				bestFitness = currentFitness;
 				bestSol = currentSol;

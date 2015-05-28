@@ -14,12 +14,13 @@ import graph.gen.ScaleFreeGraphGenerator;
 
 
 public class Simulator {
+	public final static double ACTION_COST= 0.4;
+	
 	private final static long SEED = 0;
 	private final static int REPEAT_COUNT = 50;
 	private final static int MIN_NUM_PLAYERS = 10;
 	private final static int MAX_NUM_PLAYERS = 10;
 	private final static int NUM_PLAYERS_STEP = 2;
-	private final static double ACTION_COST= 0.4;
 	private final static double ER_EDGE_PROB = 0.4;
 	private final static double SF_EDGE_PROB = 0.1;
 	private final static int SF_M0 = 4;

@@ -5,6 +5,6 @@ import algorithm.components.CandidateSolution;
 
 public interface FitnessEvaluator {
 
-	public int evaluate(Graph g, CandidateSolution currentSol);
+	public double evaluate(Graph g, CandidateSolution currentSol);
 
 }

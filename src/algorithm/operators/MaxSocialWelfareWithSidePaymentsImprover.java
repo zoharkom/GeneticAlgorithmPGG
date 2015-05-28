@@ -8,7 +8,7 @@ public class MaxSocialWelfareWithSidePaymentsImprover implements SolutionImprove
 	@Override
 	public CandidateSolution improveSolution(Graph g, CandidateSolution s) {
 		// TODO Auto-generated method stub
-		return null;
+		return s;
 	}
 
 
