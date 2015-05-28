@@ -7,6 +7,6 @@ import algorithm.components.Population;
 
 public interface ParentSelector {
 
-	List<CandidateSolution> select(Population population, FitnessEvaluator fitnessEvaluator);
+	public List<CandidateSolution> select(Population population, FitnessEvaluator fitnessEvaluator);
 
 }

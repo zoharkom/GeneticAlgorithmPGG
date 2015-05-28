@@ -1,6 +1,7 @@
 package algorithm;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -12,6 +13,7 @@ import algorithm.components.operators.CrossoverOperator;
 import algorithm.components.operators.FitnessEvaluator;
 import algorithm.components.operators.MutationOperator;
 import algorithm.components.operators.ParentSelector;
+import algorithm.components.operators.SolutionImprover;
 import algorithm.components.operators.SurvivorSelector;
 
 public class SimpleGeneticAlgorithm implements PGGAlgorithm {
@@ -21,23 +23,26 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 	private MutationOperator mutationOperator;
 	private CrossoverOperator crossoverOperator;
 	private FitnessEvaluator fitnessEvaluator;
+	private SolutionImprover solutionImprover;
 	private int popSize;
+	private double mutationProb;
+	private double crossoverProb;
+	private int numOfGenerations;
 	
-	
-	
-
 	@Override
 	public void algorithmConfig(PGGAlgorithmConfiguration conf) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public CandidateSolution evolveSolutions(Graph g) {
+	public CandidateSolution findSolution(Graph g) {
 		//Create initial population (according to the required representation):
 		Population population = new Population(g, popSize, rand);
 		
+		int generation = 0;
+		
 		//Evolve candidate solutions until termination condition holds:
-		while(!shouldTerminate()){
+		while(!shouldTerminate(generation++)){
 			//1. Parent selection:
 			List<CandidateSolution> parents = parentSelector.select(population, fitnessEvaluator);
 			
@@ -56,30 +61,69 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		
 		CandidateSolution bestSol = chooseBestSolution(population);
 		
-		//TODO - perform best improvement or some other local search
-		//       improvement to achieve a PNE (with/without side payments)
+		//Perform an improvement to the found solution:
+		bestSol = solutionImprover.improveSolution(bestSol);
 		
 		return bestSol;
 	}
 	
-	private void mutatePopulation(Population population) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private Population computeNextGeneration(List<CandidateSolution> parents) {
-		// TODO Auto-generated method stub
-		return null;
+		Population nextGen = new Population();
+		
+		Iterator<CandidateSolution> iter = parents.iterator();
+		while(iter.hasNext()){
+			CandidateSolution s1 = iter.next();
+			if(iter.hasNext()){ //Standard case with 2 parents
+				CandidateSolution s2 = iter.next();
+				
+				if(rand.nextDouble() < crossoverProb){ //Perform crossover with probability p_c:
+					CandidateSolution offspring1 = crossoverOperator.doCrossover(s1, s2);
+					CandidateSolution offspring2 = crossoverOperator.doCrossover(s1, s2);
+					
+					nextGen.addIndividual(offspring1);
+					nextGen.addIndividual(offspring2);
+					
+				} else { //No crossover, just copy parents:
+					nextGen.addIndividual(s1);
+					nextGen.addIndividual(s2);
+				}
+				
+			} else { //Only one parent (number of parents is odd and this is the last parent)
+				nextGen.addIndividual(s1);
+			}
+		}
+
+		return nextGen;
 	}
 
 	private CandidateSolution chooseBestSolution(Population population) {
-		// TODO Auto-generated method stub
-		return null;
+		CandidateSolution bestSol = null;
+		int bestFitness = Integer.MIN_VALUE;
+		
+		for(int i = 0; i < population.getSize() ; i++){
+			CandidateSolution currentSol = population.getIndividual(i);
+			int currentFitness = fitnessEvaluator.evaluate(currentSol);
+			if(currentFitness >= bestFitness){
+				bestFitness = currentFitness;
+				bestSol = currentSol;
+			}
+		}
+		
+		return bestSol;
 	}
 
-	private boolean shouldTerminate(){
-		// TODO Auto-generated method stub
-		return false;
+	private boolean shouldTerminate(int generation){
+		return (generation >= numOfGenerations);
 	}
 	
+	private void mutatePopulation(Population population) {
+		for(int i = 0; i < population.getSize() ; i++){
+			//Perform mutation to individual i with probability p_m:
+			if(rand.nextDouble() < mutationProb){
+				CandidateSolution beforeMutation = population.getIndividual(i);
+				CandidateSolution afterMutation = mutationOperator.doMutation(beforeMutation);
+				population.setIndividual(i, afterMutation);	
+			}
+		}
+	}
 }

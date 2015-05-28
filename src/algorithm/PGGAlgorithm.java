@@ -6,5 +6,5 @@ import algorithm.components.PGGAlgorithmConfiguration;
 
 public interface PGGAlgorithm {
 	public void algorithmConfig(PGGAlgorithmConfiguration conf);
-	public CandidateSolution evolveSolutions(Graph g);
+	public CandidateSolution findSolution(Graph g);
 }

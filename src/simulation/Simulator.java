@@ -49,7 +49,7 @@ public class Simulator {
 //				Graph g = new ScaleFreeGraphGenerator(SF_M, SF_M0, SF_EDGE_PROB).generate(n, rand);
 				
 				//Solve problem using SGA:
-				CandidateSolution sol = alg.evolveSolutions(g);
+				CandidateSolution sol = alg.findSolution(g);
 				
 				//Print solution: TODO --> should print to a csv file?
 				System.out.println("Best solution: " + sol.toString());
