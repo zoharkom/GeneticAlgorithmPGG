@@ -19,6 +19,8 @@ public class SGAConfiguration implements PGGAlgorithmConfiguration {
 	
 	private final static long SEED = 37;
 	
+	private Random rand;
+	
 	private int populationSize;
 	private int numberOfGenerations;
 	private double mutationProb;
@@ -31,11 +33,10 @@ public class SGAConfiguration implements PGGAlgorithmConfiguration {
 	private FitnessEvaluator fitnessEvaluator;
 	private SolutionImprover solutionImprover;
 	
-	private Random rand;
-
-
 	public static SGAConfiguration generateDefaultSGAConfiguration(){
 		SGAConfiguration conf = new SGAConfiguration();
+		conf.rand = new Random(SEED);
+		
 		conf.populationSize = 100;
 		conf.numberOfGenerations = 1000;
 		conf.mutationProb = 0.1;
@@ -43,12 +44,12 @@ public class SGAConfiguration implements PGGAlgorithmConfiguration {
 		
 		conf.parentSelector = new SimpleParentSelector();
 		conf.survivorSelector = new SimpleSurvivorSelector();
-		conf.mutationOperator = new SimpleMutationOperator();
+		conf.mutationOperator = new SimpleMutationOperator(conf.rand, conf.mutationProb);
 		conf.crossoverOperator = new OnePointCrossoverOperator();
 		conf.fitnessEvaluator = new MaxSocialWelfareFitnessEvaluator();
 		conf.solutionImprover = new MaxSocialWelfareWithSidePaymentsImprover();
 		
-		conf.rand = new Random(SEED);
+		
 		
 		return conf;
 	}

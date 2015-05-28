@@ -1,5 +1,6 @@
 package algorithm;
 
+import java.rmi.UnexpectedException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -49,7 +50,7 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 	}
 	
 	@Override
-	public CandidateSolution findSolution(Graph g) {
+	public CandidateSolution findSolution(Graph g) throws UnexpectedException {
 		//Create initial population (according to the required representation):
 		Population population = new Population(g, popSize, rand);
 		
@@ -73,15 +74,15 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 			population = survivorSelector.select(population, fitnessEvaluator);
 		}
 		
-		CandidateSolution bestSol = chooseBestSolution(population);
+		CandidateSolution bestSol = chooseBestSolution(g, population);
 		
 		//Perform an improvement to the found solution:
-		bestSol = solutionImprover.improveSolution(bestSol);
+		bestSol = solutionImprover.improveSolution(g, bestSol);
 		
 		return bestSol;
 	}
 	
-	private Population computeNextGeneration(List<CandidateSolution> parents) {
+	private Population computeNextGeneration(List<CandidateSolution> parents) throws UnexpectedException {
 		Population nextGen = new Population();
 		
 		Iterator<CandidateSolution> iter = parents.iterator();
@@ -110,13 +111,13 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		return nextGen;
 	}
 
-	private CandidateSolution chooseBestSolution(Population population) {
+	private CandidateSolution chooseBestSolution(Graph g,Population population) {
 		CandidateSolution bestSol = null;
 		int bestFitness = Integer.MIN_VALUE;
 		
 		for(int i = 0; i < population.getSize() ; i++){
 			CandidateSolution currentSol = population.getIndividual(i);
-			int currentFitness = fitnessEvaluator.evaluate(currentSol);
+			int currentFitness = fitnessEvaluator.evaluate(g, currentSol);
 			if(currentFitness >= bestFitness){
 				bestFitness = currentFitness;
 				bestSol = currentSol;

@@ -1,5 +1,6 @@
 package simulation;
 
+import java.rmi.UnexpectedException;
 import java.util.Random;
 
 import algorithm.PGGAlgorithm;
@@ -49,7 +50,12 @@ public class Simulator {
 //				Graph g = new ScaleFreeGraphGenerator(SF_M, SF_M0, SF_EDGE_PROB).generate(n, rand);
 
 				//Solve problem using SGA:
-				CandidateSolution sol = alg.findSolution(g);
+				CandidateSolution sol = null;
+				try {
+					sol = alg.findSolution(g);
+				} catch (UnexpectedException e) {
+					e.printStackTrace();
+				}
 				
 				//Print solution: TODO --> we better print to a csv file...
 				System.out.println("Best solution: " + sol.toString());

@@ -17,8 +17,25 @@ public class CandidateSolution {
 		}
 	}
 	
+	public CandidateSolution(CandidateSolution s) {
+		this.size = s.size;
+		this.candidate = new boolean[this.size];
+		for(int i=0 ; i < this.size ; i++){
+			this.candidate[i] = s.candidate[i];
+		}
+	}
+
 	public int getSize(){
 		return this.size;
+	}
+
+	public boolean getAllele(int i) {
+		return this.candidate[i];
+	}
+
+	public void setAllele(int i, boolean allele) {
+		this.candidate[i] = allele;
+		
 	}
 
 }
