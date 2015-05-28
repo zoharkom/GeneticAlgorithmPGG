@@ -1,4 +1,4 @@
-package algorithm.components;
+package algorithm.components.operators;
 
 public interface FitnessEvaluator {
 
