@@ -7,14 +7,14 @@ import java.util.Random;
 
 import graph.Graph;
 import algorithm.components.CandidateSolution;
-import algorithm.components.PGGAlgorithmConfiguration;
 import algorithm.components.Population;
-import algorithm.components.operators.CrossoverOperator;
-import algorithm.components.operators.FitnessEvaluator;
-import algorithm.components.operators.MutationOperator;
-import algorithm.components.operators.ParentSelector;
-import algorithm.components.operators.SolutionImprover;
-import algorithm.components.operators.SurvivorSelector;
+import algorithm.config.SGAConfiguration;
+import algorithm.operators.SolutionImprover;
+import algorithm.operators.crossover.CrossoverOperator;
+import algorithm.operators.fitness.FitnessEvaluator;
+import algorithm.operators.mutation.MutationOperator;
+import algorithm.operators.selection.ParentSelector;
+import algorithm.operators.selection.SurvivorSelector;
 
 public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 	private Random rand;
@@ -32,9 +32,8 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 	private SolutionImprover solutionImprover;
 
 	
-	@Override
-	public void algorithmConfig(PGGAlgorithmConfiguration conf) {
-		this.rand = conf.getRandomGenerator();
+	public void algorithmConfig(SGAConfiguration conf) {
+		this.rand = conf.getRand();
 		
 		this.popSize = conf.getPopulationSize();
 		this.mutationProb = conf.getMutationProbability();
@@ -48,7 +47,7 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		this.fitnessEvaluator = conf.getFitnessEvaluator();
 		this.solutionImprover = conf.getSolutionImprover();
 	}
-
+	
 	@Override
 	public CandidateSolution findSolution(Graph g) {
 		//Create initial population (according to the required representation):

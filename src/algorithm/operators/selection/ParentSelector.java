@@ -1,9 +1,10 @@
-package algorithm.components.operators;
+package algorithm.operators.selection;
 
 import java.util.List;
 
 import algorithm.components.CandidateSolution;
 import algorithm.components.Population;
+import algorithm.operators.fitness.FitnessEvaluator;
 
 public interface ParentSelector {
 

@@ -5,7 +5,7 @@ import java.util.Random;
 import algorithm.PGGAlgorithm;
 import algorithm.SimpleGeneticAlgorithm;
 import algorithm.components.CandidateSolution;
-import algorithm.components.PGGAlgorithmConfiguration;
+import algorithm.config.SGAConfiguration;
 import graph.Graph;
 import graph.gen.ErdosReniyGraphGenerator;
 import graph.gen.ScaleFreeGraphGenerator;
@@ -28,8 +28,8 @@ public class Simulator {
 	public static void main(String[] args){
 		
 		//Configure algorithm:
-		PGGAlgorithm alg = new SimpleGeneticAlgorithm();
-		PGGAlgorithmConfiguration conf = new PGGAlgorithmConfiguration();
+		SimpleGeneticAlgorithm alg = new SimpleGeneticAlgorithm();
+		SGAConfiguration conf = SGAConfiguration.generateDefaultSGAConfiguration();
 		alg.algorithmConfig(conf);
 		
 		//Run experiments:
@@ -47,11 +47,11 @@ public class Simulator {
 				//Generate a problem instance (i.e., 1 graph):
 				Graph g = new ErdosReniyGraphGenerator(ER_EDGE_PROB).generate(n, rand);
 //				Graph g = new ScaleFreeGraphGenerator(SF_M, SF_M0, SF_EDGE_PROB).generate(n, rand);
-				
+
 				//Solve problem using SGA:
 				CandidateSolution sol = alg.findSolution(g);
 				
-				//Print solution: TODO --> should print to a csv file?
+				//Print solution: TODO --> we better print to a csv file...
 				System.out.println("Best solution: " + sol.toString());
 			}
 		}

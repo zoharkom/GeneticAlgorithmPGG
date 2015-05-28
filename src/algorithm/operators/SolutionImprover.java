@@ -1,4 +1,4 @@
-package algorithm.components.operators;
+package algorithm.operators;
 
 import algorithm.components.CandidateSolution;
 

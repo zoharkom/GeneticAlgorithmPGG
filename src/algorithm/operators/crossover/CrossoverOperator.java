@@ -1,4 +1,4 @@
-package algorithm.components.operators;
+package algorithm.operators.crossover;
 
 import algorithm.components.CandidateSolution;
 

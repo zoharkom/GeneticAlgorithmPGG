@@ -1,25 +1,20 @@
 package algorithm.components;
 
 import graph.Graph;
-import graph.Vertex;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class CandidateSolution {
 	
-	private Map<Vertex, Boolean> vertexToAction;
+	private boolean[] candidate;
 	private int size;
 	
 	public CandidateSolution(Graph g, Random rand){
-		vertexToAction = new HashMap<>();
+		size = g.getVertices().size();
 		
-		for(Vertex v : g.getVertices()){
-			vertexToAction.put(v, rand.nextBoolean());
+		candidate = new boolean[size];
+		for(int i=0; i<size; i++){
+			candidate[i] = rand.nextBoolean();
 		}
-		
-		size = vertexToAction.size();
 	}
 	
 	public int getSize(){

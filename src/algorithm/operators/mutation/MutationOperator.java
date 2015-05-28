@@ -1,4 +1,4 @@
-package algorithm.components.operators;
+package algorithm.operators.mutation;
 
 import algorithm.components.CandidateSolution;
 

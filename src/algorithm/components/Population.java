@@ -8,27 +8,21 @@ import java.util.Random;
 public class Population {
 	
 	private ArrayList<CandidateSolution> population;
-	private int size;
 	
 	public Population(){
 		this.population = new ArrayList<>();
-		//TODO
-	}
-	
-	public Population(Graph graph, int size){
-		this.size = size;
-		this.population = new ArrayList<>();
-		//TODO
 	}
 	
 	public Population(Graph graph, int size, Random rand){
-		this.size = size;
 		this.population = new ArrayList<>();
-		//TODO
+		for(int i = 0; i < size ; i++){
+			CandidateSolution s = new CandidateSolution(graph, rand);
+			this.addIndividual(s);
+		}
 	}
 
 	public int getSize() {
-		return this.size;
+		return this.population.size();
 	}
 
 	public CandidateSolution getIndividual(int i) {
@@ -42,7 +36,5 @@ public class Population {
 	public void addIndividual(CandidateSolution s) {
 		this.population.add(s);
 	}
-	
-
 
 }
