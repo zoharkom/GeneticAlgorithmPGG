@@ -9,6 +9,10 @@ public class OnePointCrossoverOperator implements CrossoverOperator {
 
 	private Random rand;
 	
+	public OnePointCrossoverOperator(Random rand) {
+		this.rand = rand;
+	}
+	
 	@Override
 	public CandidateSolution doCrossover(CandidateSolution s1, CandidateSolution s2) throws UnexpectedException {
 		

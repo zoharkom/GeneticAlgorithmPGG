@@ -3,6 +3,7 @@ package algorithm.components;
 import graph.Graph;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Population {
@@ -35,6 +36,10 @@ public class Population {
 	
 	public void addIndividual(CandidateSolution s) {
 		this.population.add(s);
+	}
+
+	public List<CandidateSolution> asList() {
+		return this.population;
 	}
 
 }

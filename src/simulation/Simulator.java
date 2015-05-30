@@ -1,5 +1,6 @@
 package simulation;
 
+import java.io.IOException;
 import java.rmi.UnexpectedException;
 import java.util.Random;
 
@@ -10,6 +11,7 @@ import algorithm.config.SGAConfiguration;
 import graph.Graph;
 import graph.gen.ErdosReniyGraphGenerator;
 import graph.gen.ScaleFreeGraphGenerator;
+import graph.util.GDFWriter;
 
 
 
@@ -17,7 +19,7 @@ public class Simulator {
 	public final static double ACTION_COST= 0.4;
 	
 	private final static long SEED = 0;
-	private final static int REPEAT_COUNT = 50;
+	private final static int REPEAT_COUNT = 1;
 	private final static int MIN_NUM_PLAYERS = 10;
 	private final static int MAX_NUM_PLAYERS = 10;
 	private final static int NUM_PLAYERS_STEP = 2;
@@ -54,7 +56,8 @@ public class Simulator {
 				CandidateSolution sol = null;
 				try {
 					sol = alg.findSolution(g);
-				} catch (UnexpectedException e) {
+					GDFWriter.write(g, sol, "/home/zohar/Desktop/PGGOutput/out"+i+".gdf");
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				

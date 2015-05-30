@@ -45,7 +45,7 @@ public class SGAConfiguration implements PGGAlgorithmConfiguration {
 		conf.parentSelector = new SimpleParentSelector();
 		conf.survivorSelector = new SimpleSurvivorSelector();
 		conf.mutationOperator = new SimpleMutationOperator(conf.rand, conf.mutationProb);
-		conf.crossoverOperator = new OnePointCrossoverOperator();
+		conf.crossoverOperator = new OnePointCrossoverOperator(conf.rand);
 		conf.fitnessEvaluator = new MaxSocialWelfareFitnessEvaluator();
 		conf.solutionImprover = new MaxSocialWelfareWithSidePaymentsImprover();
 		

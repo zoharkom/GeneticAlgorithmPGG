@@ -9,10 +9,9 @@ import algorithm.operators.fitness.FitnessEvaluator;
 public class SimpleParentSelector implements ParentSelector {
 
 	@Override
-	public List<CandidateSolution> select(Population population,
-			FitnessEvaluator fitnessEvaluator) {
+	public List<CandidateSolution> select(Population population,FitnessEvaluator fitnessEvaluator) {
 		// TODO Auto-generated method stub
-		return null;
+		return population.asList();
 	}
 
 }
