@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.rmi.UnexpectedException;
 import java.util.Random;
 
-import algorithm.PGGAlgorithm;
+import algorithm.BestResponseAlgorithm;
+import algorithm.BruteForce;
 import algorithm.SimpleGeneticAlgorithm;
 import algorithm.components.CandidateSolution;
 import algorithm.config.SGAConfiguration;
@@ -20,10 +21,10 @@ public class Simulator {
 	
 	private final static long SEED = 0;
 	private final static int REPEAT_COUNT = 1;
-	private final static int MIN_NUM_PLAYERS = 10;
-	private final static int MAX_NUM_PLAYERS = 10;
+	private final static int MIN_NUM_PLAYERS = 20;
+	private final static int MAX_NUM_PLAYERS = 20;
 	private final static int NUM_PLAYERS_STEP = 2;
-	private final static double ER_EDGE_PROB = 0.4;
+	private final static double ER_EDGE_PROB = 0.3;
 	private final static double SF_EDGE_PROB = 0.1;
 	private final static int SF_M0 = 4;
 	private final static int SF_M = 1;
@@ -32,9 +33,9 @@ public class Simulator {
 	public static void main(String[] args){
 		
 		//Configure algorithm:
-		SimpleGeneticAlgorithm alg = new SimpleGeneticAlgorithm();
+		SimpleGeneticAlgorithm genAlg = new SimpleGeneticAlgorithm();
 		SGAConfiguration conf = SGAConfiguration.generateDefaultSGAConfiguration();
-		alg.algorithmConfig(conf);
+		genAlg.algorithmConfig(conf);
 		
 		//Run experiments:
 		Random rand = new Random(SEED);
@@ -49,20 +50,24 @@ public class Simulator {
 				System.out.println("Generating problem number: "+ i);
 				
 				//Generate a problem instance (i.e., 1 graph):
-				Graph g = new ErdosReniyGraphGenerator(ER_EDGE_PROB).generate(n, rand);
-//				Graph g = new ScaleFreeGraphGenerator(SF_M, SF_M0, SF_EDGE_PROB).generate(n, rand);
+//				Graph g1 = new ErdosReniyGraphGenerator(ER_EDGE_PROB).generate(n, rand);
+				Graph g2 = new ScaleFreeGraphGenerator(SF_M, SF_M0, SF_EDGE_PROB).generate(n, rand);
 
 				//Solve problem using SGA:
-				CandidateSolution sol = null;
+				CandidateSolution sol1 = null,sol2 = null, sol3 = null;
 				try {
-					sol = alg.findSolution(g);
-					GDFWriter.write(g, sol, "/home/zohar/Desktop/PGGOutput/out"+i+".gdf");
+					sol1 = genAlg.findSolution(g2);
+					sol2 = new BestResponseAlgorithm().findSolution(g2);
+					sol3 = new BruteForce().findSolution(g2);
+					
+					GDFWriter.write(g2, sol1, "/home/zohar/Desktop/PGGOutput/out-ga-"+i+".gdf");
+					GDFWriter.write(g2, sol2, "/home/zohar/Desktop/PGGOutput/out-best-response-"+i+".gdf");
+					GDFWriter.write(g2, sol3, "/home/zohar/Desktop/PGGOutput/out-brute-force-"+i+".gdf");
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				//Print solution: TODO --> we better print to a csv file...
-				System.out.println("Best solution: " + sol.toString());
 			}
 		}
 

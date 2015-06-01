@@ -28,4 +28,9 @@ public class Vertex {
 	public String toString() {
 		return "v_" + id;
 	}
+
+	public static void resetIdGenerator() {
+		indexGenerator = 0;
+		
+	}
 }

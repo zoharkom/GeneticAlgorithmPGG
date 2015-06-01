@@ -8,6 +8,15 @@ public class CandidateSolution {
 	private boolean[] candidate;
 	private int size;
 	
+	public CandidateSolution(Graph g){
+		size = g.getVertices().size();
+		
+		candidate = new boolean[size];
+		for(int i=0; i<size; i++){
+			candidate[i] = false;
+		}
+	}
+	
 	public CandidateSolution(Graph g, Random rand){
 		size = g.getVertices().size();
 		
@@ -22,6 +31,15 @@ public class CandidateSolution {
 		this.candidate = new boolean[this.size];
 		for(int i=0 ; i < this.size ; i++){
 			this.candidate[i] = s.candidate[i];
+		}
+	}
+
+	public CandidateSolution(int assignment, int size) {
+		this.size = size;
+		candidate = new boolean[size];
+		for(int i=0; i<size; i++){
+			int bit = 1 << i;
+			candidate[i] = ( (bit & assignment) == 0 ? false : true);
 		}
 	}
 

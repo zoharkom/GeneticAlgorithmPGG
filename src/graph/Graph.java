@@ -16,6 +16,7 @@ public class Graph {
 		for (int i = 0; i < n; i++) {
 			vertices.add(new Vertex());
 		}
+		Vertex.resetIdGenerator();
 	}
 
 	public Set<Vertex> getVertices() {

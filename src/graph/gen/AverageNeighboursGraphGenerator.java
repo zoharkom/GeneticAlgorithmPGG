@@ -30,7 +30,7 @@ public class AverageNeighboursGraphGenerator implements GraphGenerator {
 			indexToVertex.put(index, v);
 			index++;
 		}
-
+		
 		for (int i = 0; i < n; i++) {
 			List<Vertex> vertices = new LinkedList<>(g.getVertices());
 			Collections.shuffle(vertices, rand);
@@ -42,6 +42,7 @@ public class AverageNeighboursGraphGenerator implements GraphGenerator {
 				g.addUndirectedEdge(v, nv);
 			}
 		}
+		
 
 		return g;
 	}
