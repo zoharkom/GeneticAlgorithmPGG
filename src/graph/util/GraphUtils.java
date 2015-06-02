@@ -89,5 +89,38 @@ public class GraphUtils {
 		//v has no neighbor with action T so v's state is: FF
 		return false;
 	}
+
+	public static boolean hasDependents(Graph g, CandidateSolution s, Vertex v) {
+		
+		for(Vertex neighbor:g.getNeighbours(v)){
+			if(doesDependOn(neighbor, v, g, s)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	private static boolean doesDependOn(Vertex neighbor, Vertex v, Graph g, CandidateSolution s) {
+		boolean vVal = s.getAllele(v.getId());
+		boolean neighborVal = s.getAllele(neighbor.getId());
+		
+		//If 'neighbor' chooses T or v chooses F we know that 'neighbor'
+		//does not depend on v: 
+		if(neighborVal || !vVal ){
+			return false;
+		}
+		
+		for(Vertex k : g.getNeighbours(neighbor)){
+			//If 'neighbor' has some neighbor k other than v that chooses T
+			//'neighbor' does not depend on v:
+			if( (!k.equals(v)) && s.getAllele(k.getId()) ){
+				return false;
+			}
+		}
+		
+		
+		return true;
+	}
 	
 }

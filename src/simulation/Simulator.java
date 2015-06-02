@@ -19,8 +19,8 @@ public class Simulator {
 	
 	private final static long SEED = 0;
 	private final static int REPEAT_COUNT = 1;
-	private final static int MIN_NUM_PLAYERS = 1000;
-	private final static int MAX_NUM_PLAYERS = 1000;
+	private final static int MIN_NUM_PLAYERS = 100;
+	private final static int MAX_NUM_PLAYERS = 100;
 	private final static int NUM_PLAYERS_STEP = 2;
 	private final static double ER_EDGE_PROB = 0.3;
 	private final static double SF_EDGE_PROB = 0.1;
@@ -55,7 +55,7 @@ public class Simulator {
 				CandidateSolution sol1 = null,sol2 = null, sol3 = null;
 				try {
 //					sol1 = genAlg.findSolution(g2);
-					sol2 = new BestResponseAlgorithm().findSolution(g2);
+					sol2 = new BestResponseAlgorithm(g2).findSolution(g2);
 //					sol3 = new BruteForce().findSolution(g2);
 					
 //					GDFWriter.write(g2, sol1, "/home/zohar/Desktop/PGGOutput/out-ga-"+i+".gdf");
