@@ -59,7 +59,7 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		//Evolve candidate solutions until termination condition holds:
 		while(!shouldTerminate(generation++)){
 			//1. Parent selection:
-			List<CandidateSolution> parents = parentSelector.select(population, fitnessEvaluator);
+			List<CandidateSolution> parents = parentSelector.select(population, fitnessEvaluator).asList();
 			
 			//2. Shuffle mating pool:
 			Collections.shuffle(parents);
