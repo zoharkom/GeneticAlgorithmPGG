@@ -8,14 +8,13 @@ import java.rmi.UnexpectedException;
 import java.util.Random;
 
 import algorithm.components.CandidateSolution;
+import algorithm.config.BestResponseConfiguration;
 
 public class BestResponseAlgorithm implements PGGAlgorithm {
-	Graph graph;
 	CandidateSolution initialSolution;
 	
-	public BestResponseAlgorithm(Graph g) {
-		graph = g;
-		initialSolution = new CandidateSolution(g,new Random());
+	public void algorithmConfig(BestResponseConfiguration conf){
+		
 	}
 	
 	public void setInitialSolution(CandidateSolution s){
@@ -25,6 +24,9 @@ public class BestResponseAlgorithm implements PGGAlgorithm {
 	@Override
 	public CandidateSolution findSolution(Graph g) throws UnexpectedException {
 		boolean shouldStop = false;
+		if(initialSolution == null){
+			initialSolution = new CandidateSolution(g, new Random());
+		}
 		CandidateSolution currentSol = initialSolution;
 		while(!shouldStop){
 			shouldStop = true;

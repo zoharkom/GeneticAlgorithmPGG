@@ -10,7 +10,7 @@ public class BestResponseImprover implements SolutionImprover {
 
 	@Override
 	public CandidateSolution improveSolution(Graph g, CandidateSolution s) throws UnexpectedException {
-		BestResponseAlgorithm alg = new BestResponseAlgorithm(g);
+		BestResponseAlgorithm alg = new BestResponseAlgorithm();
 		alg.setInitialSolution(s);
 		return alg.findSolution(g);
 	}

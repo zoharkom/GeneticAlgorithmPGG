@@ -11,8 +11,6 @@ import algorithm.operators.improve.SolutionImprover;
 import algorithm.operators.mutation.MutationOperator;
 import algorithm.operators.mutation.SimpleMutationOperator;
 import algorithm.operators.selection.ParentSelector;
-import algorithm.operators.selection.RouletWheelFitnessPropParentSelection;
-import algorithm.operators.selection.SimpleParentSelector;
 import algorithm.operators.selection.SimpleSurvivorSelector;
 import algorithm.operators.selection.SurvivorSelector;
 import algorithm.operators.selection.TournamentParentSelector;
@@ -20,7 +18,7 @@ import algorithm.operators.selection.TournamentParentSelector;
 public class SGAConfiguration implements PGGAlgorithmConfiguration {
 	
 	private final static long SEED = 37;
-	private final static int ITERATIONS = 100;
+	private final static int ITERATIONS = 1000;
 	
 	private Random rand;
 	
@@ -145,25 +143,6 @@ public class SGAConfiguration implements PGGAlgorithmConfiguration {
 		this.rand = rand;
 	}
 
-	public static SGAConfiguration generateDefaultSGAConfiguration1() {
-		SGAConfiguration conf = new SGAConfiguration();
-		conf.rand = new Random(SEED);
-		
-		conf.populationSize = 100;
-		conf.numberOfGenerations = ITERATIONS;
-		conf.mutationProb = 0.1;
-		conf.crossoverProb = 0.6;
-		
-		conf.parentSelector = new RouletWheelFitnessPropParentSelection();
-		conf.survivorSelector = new SimpleSurvivorSelector();
-		conf.mutationOperator = new SimpleMutationOperator(conf.rand, conf.mutationProb);
-		conf.crossoverOperator = new OnePointCrossoverOperator(conf.rand);
-		conf.fitnessEvaluator = new MaxSocialWelfareFitnessEvaluator();
-		conf.solutionImprover = new MaxSocialWelfareWithSidePaymentsImprover();
-		
-		
-		
-		return conf;
-	}
+
 
 }

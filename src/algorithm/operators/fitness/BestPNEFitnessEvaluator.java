@@ -8,11 +8,8 @@ import algorithm.components.CandidateSolution;
 
 public class BestPNEFitnessEvaluator implements FitnessEvaluator {
 
-	private static double STABILITY_CONSTANT;
+	private static double STABILITY_CONSTANT = 1;
 	
-	public BestPNEFitnessEvaluator(double stabilityConstant) {
-		STABILITY_CONSTANT = stabilityConstant;
-	}
 	
 
 	@Override
@@ -22,7 +19,7 @@ public class BestPNEFitnessEvaluator implements FitnessEvaluator {
 		for(Vertex v : g.getVertices()){
 			//Add "stability constant" for each stable node:
 			if(GraphUtils.isStable(g, s, v)){
-				fitness += STABILITY_CONSTANT;
+				fitness += (STABILITY_CONSTANT*g.getVertices().size());
 			}
 			
 			
