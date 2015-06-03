@@ -2,22 +2,25 @@ package algorithm.config;
 
 import java.util.Random;
 
-import algorithm.operators.MaxSocialWelfareWithSidePaymentsImprover;
-import algorithm.operators.SolutionImprover;
 import algorithm.operators.crossover.CrossoverOperator;
 import algorithm.operators.crossover.OnePointCrossoverOperator;
 import algorithm.operators.fitness.FitnessEvaluator;
 import algorithm.operators.fitness.MaxSocialWelfareFitnessEvaluator;
+import algorithm.operators.improve.MaxSocialWelfareWithSidePaymentsImprover;
+import algorithm.operators.improve.SolutionImprover;
 import algorithm.operators.mutation.MutationOperator;
 import algorithm.operators.mutation.SimpleMutationOperator;
 import algorithm.operators.selection.ParentSelector;
+import algorithm.operators.selection.RouletWheelFitnessPropParentSelection;
 import algorithm.operators.selection.SimpleParentSelector;
 import algorithm.operators.selection.SimpleSurvivorSelector;
 import algorithm.operators.selection.SurvivorSelector;
+import algorithm.operators.selection.TournamentParentSelector;
 
 public class SGAConfiguration implements PGGAlgorithmConfiguration {
 	
 	private final static long SEED = 37;
+	private final static int ITERATIONS = 100;
 	
 	private Random rand;
 	
@@ -38,11 +41,11 @@ public class SGAConfiguration implements PGGAlgorithmConfiguration {
 		conf.rand = new Random(SEED);
 		
 		conf.populationSize = 100;
-		conf.numberOfGenerations = 1000;
+		conf.numberOfGenerations = ITERATIONS;
 		conf.mutationProb = 0.1;
-		conf.crossoverProb = 0.8;
+		conf.crossoverProb = 0.6;
 		
-		conf.parentSelector = new SimpleParentSelector();
+		conf.parentSelector = new TournamentParentSelector();
 		conf.survivorSelector = new SimpleSurvivorSelector();
 		conf.mutationOperator = new SimpleMutationOperator(conf.rand, conf.mutationProb);
 		conf.crossoverOperator = new OnePointCrossoverOperator(conf.rand);
@@ -140,6 +143,27 @@ public class SGAConfiguration implements PGGAlgorithmConfiguration {
 
 	public void setRand(Random rand) {
 		this.rand = rand;
+	}
+
+	public static SGAConfiguration generateDefaultSGAConfiguration1() {
+		SGAConfiguration conf = new SGAConfiguration();
+		conf.rand = new Random(SEED);
+		
+		conf.populationSize = 100;
+		conf.numberOfGenerations = ITERATIONS;
+		conf.mutationProb = 0.1;
+		conf.crossoverProb = 0.6;
+		
+		conf.parentSelector = new RouletWheelFitnessPropParentSelection();
+		conf.survivorSelector = new SimpleSurvivorSelector();
+		conf.mutationOperator = new SimpleMutationOperator(conf.rand, conf.mutationProb);
+		conf.crossoverOperator = new OnePointCrossoverOperator(conf.rand);
+		conf.fitnessEvaluator = new MaxSocialWelfareFitnessEvaluator();
+		conf.solutionImprover = new MaxSocialWelfareWithSidePaymentsImprover();
+		
+		
+		
+		return conf;
 	}
 
 }

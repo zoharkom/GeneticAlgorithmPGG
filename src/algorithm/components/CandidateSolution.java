@@ -1,12 +1,14 @@
 package algorithm.components;
 
 import graph.Graph;
+
 import java.util.Random;
 
 public class CandidateSolution {
 	
 	private boolean[] candidate;
 	private int size;
+	private double fitness;
 	
 	public CandidateSolution(Graph g){
 		size = g.getVertices().size();
@@ -54,6 +56,14 @@ public class CandidateSolution {
 	public void setAllele(int i, boolean allele) {
 		this.candidate[i] = allele;
 		
+	}
+
+	public double getFitness() {
+		return fitness;
+	}
+	
+	public void setFitness(double fitness){
+		this.fitness = fitness;
 	}
 
 }

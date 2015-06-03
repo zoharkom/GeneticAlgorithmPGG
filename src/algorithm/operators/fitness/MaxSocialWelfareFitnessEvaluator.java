@@ -20,6 +20,7 @@ public class MaxSocialWelfareFitnessEvaluator implements FitnessEvaluator {
 			}
 		}
 		
+		currentSol.setFitness(socialWelfare);
 		return socialWelfare;
 	}
 

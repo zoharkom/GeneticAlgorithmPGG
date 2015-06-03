@@ -39,6 +39,7 @@ public class BestResponseAlgorithm implements PGGAlgorithm {
 
 			}
 		}
+		
 		return currentSol;
 	}
 

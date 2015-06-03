@@ -10,9 +10,9 @@ import graph.Graph;
 import algorithm.components.CandidateSolution;
 import algorithm.components.Population;
 import algorithm.config.SGAConfiguration;
-import algorithm.operators.SolutionImprover;
 import algorithm.operators.crossover.CrossoverOperator;
 import algorithm.operators.fitness.FitnessEvaluator;
+import algorithm.operators.improve.SolutionImprover;
 import algorithm.operators.mutation.MutationOperator;
 import algorithm.operators.selection.ParentSelector;
 import algorithm.operators.selection.SurvivorSelector;
@@ -59,13 +59,14 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		//Evolve candidate solutions until termination condition holds:
 		while(!shouldTerminate(generation++)){
 			//1. Parent selection:
-			List<CandidateSolution> parents = parentSelector.select(population, fitnessEvaluator).asList();
+			Population parents = parentSelector.select(population, g, fitnessEvaluator);
+			List<CandidateSolution> parentsList = parents.asList();
 			
 			//2. Shuffle mating pool:
-			Collections.shuffle(parents);
+			Collections.shuffle(parentsList);
 			
 			//3. Perform crossover for each consecutive pair with probability p_c (otherwise copy parents):
-			population = computeNextGeneration(parents);
+			population = computeNextGeneration(parentsList);
 			
 			//4. Perform mutation on offsprings with probability p_m:
 			mutatePopulation(population);
@@ -78,6 +79,9 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		
 		//Perform an improvement to the found solution:
 		bestSol = solutionImprover.improveSolution(g, bestSol);
+		
+		//Update the fitness of the best solution: 
+		bestSol.setFitness(fitnessEvaluator.evaluate(g, bestSol));
 		
 		return bestSol;
 	}

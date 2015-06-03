@@ -34,6 +34,7 @@ public class BestPNEFitnessEvaluator implements FitnessEvaluator {
 			}
 		}
 		
+		s.setFitness(fitness);
 		return fitness;
 	}
 

@@ -1,4 +1,4 @@
-package algorithm.operators;
+package algorithm.operators.improve;
 
 import graph.Graph;
 import graph.Vertex;
