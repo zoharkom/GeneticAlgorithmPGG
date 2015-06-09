@@ -11,13 +11,14 @@ import algorithm.components.CandidateSolution;
 import algorithm.components.Population;
 import algorithm.config.SGAConfiguration;
 import algorithm.operators.crossover.CrossoverOperator;
+import algorithm.operators.fitness.BestPNEFitnessEvaluator;
 import algorithm.operators.fitness.FitnessEvaluator;
 import algorithm.operators.improve.SolutionImprover;
 import algorithm.operators.mutation.MutationOperator;
 import algorithm.operators.selection.ParentSelector;
 import algorithm.operators.selection.SurvivorSelector;
 
-public class SimpleGeneticAlgorithm implements PGGAlgorithm {
+public class TwoPhaseSimpleGeneticAlgorithm implements PGGAlgorithm {
 	protected Random rand;
 	
 	protected int popSize;
@@ -58,6 +59,10 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		
 		//Evolve candidate solutions until termination condition holds:
 		while(!shouldTerminate(generation++)){
+			if(generation >= numOfGenerations/2){
+				fitnessEvaluator = new BestPNEFitnessEvaluator();
+			}
+			
 			//1. Parent selection:
 			Population parents = parentSelector.select(population, g, fitnessEvaluator);
 			List<CandidateSolution> parentsList = parents.asList();
@@ -74,7 +79,7 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 			//5. Survivor selection
 			population = survivorSelector.select(population,parents, g, fitnessEvaluator);
 			
-			CandidateSolution bestSolOfGen = chooseBestSolution(g, population);
+//			CandidateSolution bestSolOfGen = chooseBestSolution(g, population);
 //			System.out.println("Generation: "+generation);
 //			System.out.println("Best solution fitness: " + fitnessEvaluator.evaluate(g, bestSolOfGen));
 		}

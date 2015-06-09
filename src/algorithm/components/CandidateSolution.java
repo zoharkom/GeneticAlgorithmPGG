@@ -4,11 +4,10 @@ import graph.Graph;
 
 import java.util.Random;
 
-public class CandidateSolution {
+public class CandidateSolution{
 	
 	private boolean[] candidate;
 	private int size;
-	private double fitness;
 	
 	public CandidateSolution(Graph g){
 		size = g.getVertices().size();
@@ -35,6 +34,10 @@ public class CandidateSolution {
 			this.candidate[i] = s.candidate[i];
 		}
 	}
+	public CandidateSolution(int size) {
+		this.size = size;
+		this.candidate = new boolean[this.size];
+	}
 
 	public CandidateSolution(int assignment, int size) {
 		this.size = size;
@@ -48,22 +51,34 @@ public class CandidateSolution {
 	public int getSize(){
 		return this.size;
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o == null){
+			return false;
+		}
+		
+		if(!(o instanceof CandidateSolution)){
+			return false;
+		}
+		
+		CandidateSolution other = (CandidateSolution) o;
+		
+		for(int i = 0; i < this.getSize() ; i++){
+			if( this.candidate[i] != other.candidate[i] ){
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
-	public boolean getAllele(int i) {
+	public Boolean getAllele(int i) {
 		return this.candidate[i];
 	}
 
-	public void setAllele(int i, boolean allele) {
+	public void setAllele(int i, Boolean allele) {
 		this.candidate[i] = allele;
-		
-	}
-
-	public double getFitness() {
-		return fitness;
-	}
-	
-	public void setFitness(double fitness){
-		this.fitness = fitness;
 	}
 
 }

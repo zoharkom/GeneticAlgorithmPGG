@@ -1,6 +1,6 @@
 package algorithm.operators.fitness;
 
-import simulation.Simulator;
+import simulation.MaxSocialWelfareSimulator;
 import graph.Graph;
 import graph.Vertex;
 import graph.util.GraphUtils;
@@ -14,13 +14,12 @@ public class MaxSocialWelfareFitnessEvaluator implements FitnessEvaluator {
 		
 		for(Vertex v : g.getVertices()){
 			if(currentSol.getAllele(v.getId())){//If this vertex takes the action
-				socialWelfare += (1 - Simulator.ACTION_COST);
+				socialWelfare += (1 - MaxSocialWelfareSimulator.ACTION_COST);
 			}else if(GraphUtils.hasTrueNeighbor(g, v, currentSol)){
 				socialWelfare += 1;
 			}
 		}
 		
-		currentSol.setFitness(socialWelfare);
 		return socialWelfare;
 	}
 

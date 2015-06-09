@@ -1,6 +1,6 @@
 package algorithm.operators.fitness;
 
-import simulation.Simulator;
+import simulation.MaxSocialWelfareSimulator;
 import graph.Graph;
 import graph.Vertex;
 import graph.util.GraphUtils;
@@ -8,7 +8,7 @@ import algorithm.components.CandidateSolution;
 
 public class BestPNEFitnessEvaluator implements FitnessEvaluator {
 
-	private static double STABILITY_CONSTANT = 1;
+	private double stabilityFactor = 1;
 	
 	
 
@@ -19,20 +19,29 @@ public class BestPNEFitnessEvaluator implements FitnessEvaluator {
 		for(Vertex v : g.getVertices()){
 			//Add "stability constant" for each stable node:
 			if(GraphUtils.isStable(g, s, v)){
-				fitness += (STABILITY_CONSTANT*g.getVertices().size());
+				fitness += (getStabilityFactor()*g.getVertices().size());
 			}
 			
 			
 			//Add nodes' utility:
 			if(s.getAllele(v.getId())){
-				fitness += (1 - Simulator.ACTION_COST);
+				fitness += (1 - MaxSocialWelfareSimulator.ACTION_COST);
 			}else if(GraphUtils.hasTrueNeighbor(g, v, s)){
 				fitness += 1;
 			}
 		}
 		
-		s.setFitness(fitness);
 		return fitness;
+	}
+
+	public double getStabilityFactor() {
+		return stabilityFactor;
+	}
+
+
+
+	public void setStabilityFactor(double factor) {
+		stabilityFactor = factor;
 	}
 
 }

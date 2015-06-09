@@ -22,6 +22,13 @@ public class Population {
 		}
 	}
 
+	public Population(Population other) {
+		this.population = new ArrayList<>();
+		for(CandidateSolution s : other.population){
+			this.population.add(new CandidateSolution(s));
+		}
+	}
+
 	public int getSize() {
 		return this.population.size();
 	}
@@ -39,7 +46,12 @@ public class Population {
 	}
 
 	public List<CandidateSolution> asList() {
-		return this.population;
+		return new ArrayList<CandidateSolution>(this.population);
+	}
+
+	public void remove(CandidateSolution sol) {
+		this.population.remove(sol);
+		
 	}
 
 }

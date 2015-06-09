@@ -9,7 +9,7 @@ import java.util.Random;
 import algorithm.components.Population;
 import algorithm.operators.fitness.FitnessEvaluator;
 
-public class TournamentParentSelector implements ParentSelector {
+public class PartialTournamentParentSelector implements ParentSelector {
 
 	private static final long TOURNAMENT_SIZE = 5;
 
@@ -26,7 +26,7 @@ public class TournamentParentSelector implements ParentSelector {
 		}
 
 		for (int i = 0; i < population.getSize(); i++) {
-			
+			if(rand.nextDouble() <= 0.5){
 			Integer winner = rand.ints(0, population.getSize())
 					.distinct()
 					.limit(TOURNAMENT_SIZE)
@@ -35,6 +35,9 @@ public class TournamentParentSelector implements ParentSelector {
 						return Double.compare(fitnessMap.get(a), fitnessMap.get(b));
 					}).get();
 			parents.addIndividual(population.getIndividual(winner));
+			} else {
+				parents.addIndividual(population.getIndividual(rand.nextInt(population.getSize())));
+			}
 		}
 
 		return parents;

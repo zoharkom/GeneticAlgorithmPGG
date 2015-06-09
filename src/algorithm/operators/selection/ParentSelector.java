@@ -3,7 +3,6 @@ package algorithm.operators.selection;
 import java.rmi.UnexpectedException;
 
 import graph.Graph;
-import algorithm.components.CandidateSolution;
 import algorithm.components.Population;
 import algorithm.operators.fitness.FitnessEvaluator;
 

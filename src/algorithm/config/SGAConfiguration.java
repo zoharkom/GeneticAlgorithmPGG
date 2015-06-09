@@ -18,7 +18,7 @@ import algorithm.operators.selection.TournamentParentSelector;
 public class SGAConfiguration implements PGGAlgorithmConfiguration {
 	
 	private final static long SEED = 37;
-	private final static int ITERATIONS = 1000;
+	private final static int ITERATIONS = 200;
 	
 	private Random rand;
 	

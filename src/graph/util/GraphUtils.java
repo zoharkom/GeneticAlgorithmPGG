@@ -75,6 +75,10 @@ public class GraphUtils {
 	
 
 	public static boolean isFT(Graph g, CandidateSolution s, Vertex v) {
+		if(s == null){
+			System.out.println("NULL");
+		}
+		
 		if(s.getAllele(v.getId())){// If v's action is T
 			return false; 
 		}
