@@ -5,6 +5,7 @@ import graph.Vertex;
 import graph.util.GraphUtils;
 
 import java.rmi.UnexpectedException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import algorithm.components.CandidateSolution;
@@ -22,7 +23,7 @@ public class BestResponseAlgorithm implements PGGAlgorithm {
 	}
 
 	@Override
-	public CandidateSolution findSolution(Graph g) throws UnexpectedException {
+	public CandidateSolution findSolution(Graph g, ArrayList<double[]> stat) throws UnexpectedException {
 		boolean shouldStop = false;
 		if(initialSolution == null){
 			initialSolution = new CandidateSolution(g, new Random());

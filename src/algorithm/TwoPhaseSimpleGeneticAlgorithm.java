@@ -1,6 +1,7 @@
 package algorithm;
 
 import java.rmi.UnexpectedException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +52,7 @@ public class TwoPhaseSimpleGeneticAlgorithm implements PGGAlgorithm {
 	}
 	
 	@Override
-	public CandidateSolution findSolution(Graph g) throws UnexpectedException {
+	public CandidateSolution findSolution(Graph g, ArrayList<double[]> stat) throws UnexpectedException {
 		//Create initial population (according to the required representation):
 		Population population = new Population(g, popSize, rand);
 		

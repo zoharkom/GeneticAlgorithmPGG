@@ -3,6 +3,8 @@ package algorithm;
 import graph.Graph;
 
 import java.rmi.UnexpectedException;
+import java.util.ArrayList;
+
 import algorithm.components.CandidateSolution;
 import algorithm.config.BruteForceConfiguration;
 import algorithm.operators.fitness.FitnessEvaluator;
@@ -15,7 +17,7 @@ public class BruteForceAlgorithm implements PGGAlgorithm {
 	}
 	
 	@Override
-	public CandidateSolution findSolution(Graph g) throws UnexpectedException {
+	public CandidateSolution findSolution(Graph g, ArrayList<double[]> stat) throws UnexpectedException {
 		int n = g.getVertices().size();
 		int p = 1 << n;
 		
