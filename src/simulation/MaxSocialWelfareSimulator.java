@@ -22,6 +22,7 @@ import algorithm.operators.fitness.BestPotentialPNEFitnessEvaluator;
 import algorithm.operators.fitness.FitnessEvaluator;
 import algorithm.operators.fitness.MaxSocialWelfareFitnessEvaluator;
 import algorithm.operators.improve.BestResponseImprover;
+import algorithm.operators.improve.MaxSocialWelfareWithSidePaymentsImprover;
 import algorithm.operators.selection.ElitismSurvivorSelector;
 import algorithm.operators.selection.RouletWheelFitnessPropParentSelection;
 import graph.Graph;
@@ -35,8 +36,8 @@ public class MaxSocialWelfareSimulator {
 	
 	private final static long SEED = 0;
 	private final static int REPEAT_COUNT = 10;
-	private final static int MIN_NUM_PLAYERS = 20;
-	private final static int MAX_NUM_PLAYERS = 20;
+	private final static int MIN_NUM_PLAYERS = 200;
+	private final static int MAX_NUM_PLAYERS = 200;
 	private final static int NUM_PLAYERS_STEP = 2;
 	private final static double ER_EDGE_PROB = 0.3;
 	private final static double SF_EDGE_PROB = 1;
@@ -45,8 +46,8 @@ public class MaxSocialWelfareSimulator {
 	
 	
 	public static void main(String[] args){
-		ArrayList<double[]> stat1 = new ArrayList<double[]>();
-		ArrayList<double[]> stat2 = new ArrayList<double[]>();
+		ArrayList<double[]> stat1;
+		ArrayList<double[]> stat2;
 		
 		//Configure genetic algorithm #1:
 		SimpleGeneticAlgorithm genAlg1 = new SimpleGeneticAlgorithm();
@@ -73,7 +74,7 @@ public class MaxSocialWelfareSimulator {
 		//Configure brute-force algorithm:
 		BruteForceAlgorithm bruteForceAlg = new BruteForceAlgorithm();
 		BruteForceConfiguration conf4 = BruteForceConfiguration.generateDefaultBruteForceConfiguration();
-		conf4.setFitnessEvaluator(new BestPNEFitnessEvaluator());
+		conf4.setFitnessEvaluator(new BestPotentialPNEFitnessEvaluator());
 		bruteForceAlg.algorithmConfig(conf4);
 		
 		
@@ -93,11 +94,15 @@ public class MaxSocialWelfareSimulator {
 //				Graph g1 = new ErdosReniyGraphGenerator(ER_EDGE_PROB).generate(n, rand);
 				Graph g2 = new ScaleFreeGraphGenerator(SF_M, SF_M0, SF_EDGE_PROB).generate(n, rand);
 
+				stat1 = new ArrayList<double[]>();
+				stat2 = new ArrayList<double[]>();
+				
 				//Solve problem using SGA:
 				CandidateSolution sol1 = null,sol2 = null, sol3 = null, sol4 = null;
 				long t1,t2,t3,t4;
 				try {
-					FitnessEvaluator e = new MaxSocialWelfareFitnessEvaluator();
+					//FitnessEvaluator e = new MaxSocialWelfareFitnessEvaluator();
+					FitnessEvaluator e = new BestPotentialPNEFitnessEvaluator();
 					System.out.println("Social Welfare:");
 					//Alg 1 - GA1:
 					t1 = System.currentTimeMillis();
@@ -124,10 +129,10 @@ public class MaxSocialWelfareSimulator {
 					
 					//Alg 4 - Brute force:
 					t4 = System.currentTimeMillis();
-					sol4 = bruteForceAlg.findSolution(g2, null);
+					//sol4 = bruteForceAlg.findSolution(g2, null);
 					t4 = System.currentTimeMillis() - t4;
 					//GDFWriter.write(g2, sol4, "/home/zohar/Desktop/PGGOutput/out-brute-force-"+i+".gdf");
-					System.out.println("Brute force: " + e.evaluate(g2, sol4) + " (" + t4 + ")");					
+					//System.out.println("Brute force: " + e.evaluate(g2, sol4) + " (" + t4 + ")");					
 					System.out.println("-----------------------------------------------------");
 					
 				} catch (Exception e) {
@@ -144,12 +149,13 @@ public class MaxSocialWelfareSimulator {
 		
 			try {
 				outFile.delete();
-				outFile.createNewFile();
+				outFile.createNewFile();				
 				BufferedWriter bw = new BufferedWriter(new FileWriter(outFile.getAbsoluteFile(),false));
+				bw.write(",best fitness, average fitness, worst fitness\n");
 				for(int i = 0; i < stat.size(); i++) {
 					bw.write("" + i);
 					for(int j = 0; j < stat.get(i).length; j++) {
-						bw.write("," + (stat.get(i)[j]*100));
+						bw.write("," + (stat.get(i)[j]));
 					}
 					bw.write("\n");
 				}
