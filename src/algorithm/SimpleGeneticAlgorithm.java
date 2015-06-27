@@ -100,7 +100,7 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		if(stat != null) {
 			double[] statInfo = new double[3];
 			
-			FitnessEvaluator fe = new MaxSocialWelfareFitnessEvaluator();
+			FitnessEvaluator fe = fitnessEvaluator;
 			double bestFitness = Integer.MIN_VALUE;
 			double worstFitness = Integer.MAX_VALUE;
 			double sumFitness = 0;
