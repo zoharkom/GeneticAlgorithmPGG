@@ -12,6 +12,7 @@ import algorithm.components.CandidateSolution;
 import algorithm.components.Population;
 import algorithm.config.SGAConfiguration;
 import algorithm.operators.crossover.CrossoverOperator;
+import algorithm.operators.fitness.BestPotentialPNEFitnessEvaluator;
 import algorithm.operators.fitness.FitnessEvaluator;
 import algorithm.operators.fitness.MaxSocialWelfareFitnessEvaluator;
 import algorithm.operators.improve.SolutionImprover;
@@ -100,7 +101,11 @@ public class SimpleGeneticAlgorithm implements PGGAlgorithm {
 		if(stat != null) {
 			double[] statInfo = new double[3];
 			
+<<<<<<< HEAD
 			FitnessEvaluator fe = fitnessEvaluator;
+=======
+			FitnessEvaluator fe = new BestPotentialPNEFitnessEvaluator();
+>>>>>>> origin/master
 			double bestFitness = Integer.MIN_VALUE;
 			double worstFitness = Integer.MAX_VALUE;
 			double sumFitness = 0;
